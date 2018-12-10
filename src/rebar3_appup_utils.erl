@@ -23,7 +23,6 @@
          make_proplist/2,
          find_files/3,
          find_files_by_ext/2, find_files_by_ext/3,
-         now_str/0,
          get_sub_dirs/1,
          appup_plugin_appinfo/1,
          find_app_info/2,
@@ -78,12 +77,6 @@ find_files_by_ext(Dir, Ext, Recursive) ->
                 end,
     ExtRe = "^[^._].*" ++ EscapeDot ++ Ext ++ [$$],
     find_files(Dir, ExtRe, Recursive).
-
-%% @spec now_str() -> [any()].
-now_str() ->
-    {{Year, Month, Day}, {Hour, Minute, Second}} = calendar:local_time(),
-    lists:flatten(io_lib:format("~4b/~2..0b/~2..0b ~2..0b:~2..0b:~2..0b",
-                                [Year, Month, Day, Hour, Minute, Second])).
 
 %% @spec get_sub_dirs(atom() | binary() | [atom() | [any()] | char()]) -> [any()].
 get_sub_dirs(Dir) ->

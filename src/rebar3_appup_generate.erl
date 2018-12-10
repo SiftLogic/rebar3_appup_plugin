@@ -34,7 +34,7 @@
 
 -define(PRIV_DIR, "priv").
 -define(APPUP_TEMPLATE, "templates/appup.tpl").
--define(APPUPFILEFORMAT, "%% appup generated for ~p by rebar3_appup_plugin (~p)~n"
+-define(APPUPFILEFORMAT, "%% appup generated for ~p by rebar3_appup_plugin~n"
         "{~p,\n\t[{~p, \n\t\t~p}], \n\t[{~p, \n\t\t~p}\n]}.~n").
 -define(DEFAULT_RELEASE_DIR, "rel").
 -define(DEFAULT_PRE_PURGE, brutal_purge).
@@ -449,7 +449,6 @@ write_appup(App, OldVer, NewVer, TargetDir,
     %% write each of the .appup files
     lists:foreach(fun(AppUpFile) ->
                     AppupCtx = [{"app", App},
-                                {"now", rebar3_appup_utils:now_str()},
                                 {"new_vsn", NewVer},
                                 {"old_vsn", OldVer},
                                 {"upgrade_instructions",
@@ -750,7 +749,7 @@ get_release_name(State) ->
 %% Example:
 %%
 %% Generated relapp.appup
-%% %% appup generated for relapp by rebar3_appup_plugin (2018/01/10 14:35:19)
+%% %% appup generated for relapp by rebar3_appup_plugin
 %% {"1.0.34",
 %%   [{ "1.0.33",
 %%     [{apply,{io,format,["Upgrading is in progress..."]}}]}],
@@ -786,7 +785,7 @@ get_release_name(State) ->
 %%
 %% The final relapp.appup file after merging the pre and post contents:
 %%
-%% %% appup generated for relapp by rebar3_appup_plugin (2018/01/10 14:35:19)
+%% %% appup generated for relapp by rebar3_appup_plugin
 %% {"1.0.34",
 %%   [{"1.0.33",
 %%     [{apply,{io,format,["Upgrading started from 1.* to 1.0.34"]}},
