@@ -59,6 +59,7 @@ init(State) ->
             {bare, true},                 % The task can be run by the user, always true
             {deps, ?DEPS},                % The list of dependencies
             {opts, [                      % list of options understood by the plugin
+                {relname, $n, "relname", string, "Release name"},
                 {previous, $p, "previous", string, "location of the previous release"},
                 {previous_version, $p, "previous_version", string, "version of the previous release"},
                 {current, $c, "current", string, "location of the current release"},
