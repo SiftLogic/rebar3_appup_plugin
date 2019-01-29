@@ -19,7 +19,8 @@
 %% -------------------------------------------------------------------
 -module(rebar3_appup_utils).
 
--export([prop_check/3,
+-export([get_release_name/1,
+         prop_check/3,
          make_proplist/2,
          find_files/3,
          find_files_by_ext/2, find_files_by_ext/3,
@@ -33,6 +34,25 @@
          tmp_filename/0,
          find_app_by_name/2,
          vsn/1]).
+
+-spec get_release_name(State) -> Res when
+      State :: rebar_state:t(),
+      Res :: string().
+get_release_name(State) ->
+    {Opts, _} = rebar_state:command_parsed_args(State),
+    case proplists:get_value(relname, Opts, undefined) of
+        undefined ->
+            RelxConfig = rebar_state:get(State, relx, []),
+            case lists:keyfind(release, 1, RelxConfig) of
+                {release, {Name0, _Ver}, _} ->
+                    atom_to_list(Name0);
+                {release, {Name0, _Ver}, _, _} ->
+                    atom_to_list(Name0)
+            end;
+        Name ->
+            rebar_api:debug("release name (from command args): ~p", [Name]),
+            Name %% already a list
+    end.
 
 %% Helper function for checking values and aborting when needed
 %% @spec prop_check(boolean(),_,_) -> any().

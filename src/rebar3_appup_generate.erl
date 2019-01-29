@@ -87,7 +87,7 @@ do(State) ->
     PluginInfo = rebar3_appup_utils:appup_plugin_appinfo(Apps),
     PluginDir = rebar_app_info:dir(PluginInfo),
 
-    Name = get_release_name(State),
+    Name = rebar3_appup_utils:get_release_name(State),
     rebar_api:debug("release name: ~p", [Name]),
 
     %% check for overload of the current release
@@ -726,18 +726,6 @@ get_current_rel_path(State, Name) ->
                            ?DEFAULT_RELEASE_DIR,
                            Name]);
         Path -> Path
-    end.
-
--spec get_release_name(State) -> Res when
-      State :: rebar_state:t(),
-      Res :: string().
-get_release_name(State) ->
-    RelxConfig = rebar_state:get(State, relx, []),
-    case lists:keyfind(release, 1, RelxConfig) of
-        {release, {Name0, _Ver}, _} ->
-            atom_to_list(Name0);
-        {release, {Name0, _Ver}, _, _} ->
-            atom_to_list(Name0)
     end.
 
 %%------------------------------------------------------------------------------
